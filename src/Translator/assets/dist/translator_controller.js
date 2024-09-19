@@ -235,7 +235,7 @@ function setLocaleFallbacks(localeFallbacks) {
 function getLocaleFallbacks() {
     return _localeFallbacks;
 }
-function trans(message, parameters = {}, domain = 'messages', locale = null) {
+function trans(message, parameters = {}, domain = 'messages', locale = null, throwWhenNotFound = false) {
     if (typeof domain === 'undefined') {
         domain = 'messages';
     }
@@ -270,6 +270,11 @@ function trans(message, parameters = {}, domain = 'messages', locale = null) {
             return format(translations[locale], parameters, locale);
         }
     }
+
+    if (throwWhenNotFound) {
+        throw new Error('No translation found for the id: ' + message.id);
+    }
+    
     return message.id;
 }
 
